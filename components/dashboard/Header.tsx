@@ -1,11 +1,12 @@
-
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
 import { LogOut, User } from 'lucide-react';
 import { toast } from 'sonner';
+import { useRouter } from 'next/router';
 
 export const Header = () => {
   const { user, signOut } = useAuth();
+  const router = useRouter();
 
   const handleSignOut = async () => {
     const { error } = await signOut();
@@ -13,6 +14,7 @@ export const Header = () => {
       toast.error('Error signing out');
     } else {
       toast.success('Signed out successfully');
+      router.push('/');
     }
   };
 

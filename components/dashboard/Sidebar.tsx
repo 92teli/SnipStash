@@ -38,7 +38,7 @@ export const Sidebar = () => {
                 className={cn(
                   'flex items-center space-x-3 px-3 py-2 rounded-lg transition-colors',
                   isActive
-                    ? 'bg-emerald-600 text-white'
+                    ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow'
                     : 'text-slate-300 hover:bg-slate-700 hover:text-white'
                 )}
               >
@@ -74,7 +74,7 @@ export const Sidebar = () => {
                       className={cn(
                         'flex items-center gap-3 px-3 py-2 rounded-lg transition-all group',
                         isActive
-                          ? 'bg-gradient-to-r from-blue-600 to-purple-700 text-white shadow'
+                          ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow'
                           : 'text-slate-300 hover:bg-slate-700 hover:text-white'
                       )}
                       style={{ fontWeight: isActive ? 600 : 500 }}
@@ -91,7 +91,7 @@ export const Sidebar = () => {
               })}
               {collections.length > 5 && (
                 <Link href="/dashboard/collections" legacyBehavior>
-                  <a className="block px-3 py-1.5 text-xs text-slate-500 hover:text-slate-400">
+                  <a className="block px-3 py-1.5 text-xs font-semibold text-blue-400 hover:text-white hover:bg-blue-600/30 rounded transition">
                     View all collections...
                   </a>
                 </Link>
