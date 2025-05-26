@@ -26,6 +26,7 @@ import {
   Star,
   Fingerprint,
   AlertCircle,
+  Loader2,
 } from "lucide-react"
 import { ParticleBackground } from "@/components/particle-background"
 import { useAuth } from "@/hooks/useAuth"
@@ -40,6 +41,7 @@ export default function SignInPage() {
   const [email, setEmail] = useState("abctest@gmail.com")
   const [password, setPassword] = useState("Abc123")
   const [name, setName] = useState("")
+  const [oauthLoading, setOauthLoading] = useState<'github' | 'google' | null>(null)
   const router = useRouter()
   const { user, signIn, signUp } = useAuth()
 
@@ -108,17 +110,43 @@ export default function SignInPage() {
 
   const handleOAuthSignIn = async (provider: 'github' | 'google') => {
     try {
-      const { error } = await supabase.auth.signInWithOAuth({
+      setOauthLoading(provider);
+      const { data, error } = await supabase.auth.signInWithOAuth({
         provider,
         options: {
-          redirectTo: typeof window !== 'undefined' ? window.location.origin + '/dashboard' : undefined,
+          redirectTo: `${window.location.origin}/auth/callback`,
+          queryParams: {
+            access_type: 'offline',
+            prompt: 'consent',
+          },
         },
       });
+
       if (error) {
-        toast.error(`Failed to sign in with ${provider}`);
+        console.error('OAuth error:', error);
+        toast.error(`Failed to sign in with ${provider}: ${error.message}`, {
+          duration: 4000,
+          position: "top-center",
+          style: {
+            background: "#1e293b",
+            color: "#fff",
+            border: "1px solid #334155",
+          },
+        });
       }
     } catch (err) {
-      toast.error(`Failed to sign in with ${provider}`);
+      console.error('OAuth error:', err);
+      toast.error(`Failed to sign in with ${provider}`, {
+        duration: 4000,
+        position: "top-center",
+        style: {
+          background: "#1e293b",
+          color: "#fff",
+          border: "1px solid #334155",
+        },
+      });
+    } finally {
+      setOauthLoading(null);
     }
   };
 
@@ -578,7 +606,7 @@ export default function SignInPage() {
               </CardContent>
 
               {/* Form Content */}
-              <div className="px-8 pb-8">
+              <div className="px-8 pb-8 relative z-10">
                 <AnimatePresence mode="wait">
                   <motion.form
                     key={activeTab}
@@ -747,27 +775,51 @@ export default function SignInPage() {
                     </div>
 
                     <div className="grid grid-cols-2 gap-4">
-                      <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                        <Button
-                          type="button"
-                          className="w-full py-6 transition-all duration-200 bg-slate-700/50 border border-slate-600 text-white hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600 hover:text-white focus:bg-gradient-to-r focus:from-blue-500 focus:to-purple-600 focus:text-white active:bg-gradient-to-r active:from-blue-500 active:to-purple-600 active:text-white flex items-center justify-center"
-                          onClick={() => handleOAuthSignIn('github')}
-                        >
-                          <Github className="mr-2 h-5 w-5" />
-                          GitHub
-                        </Button>
-                      </motion.div>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        className="w-full py-6 bg-slate-700/50 border border-slate-600 text-white hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600 hover:text-white hover:border-transparent transition-all duration-200"
+                        onClick={() => {
+                          console.log('GitHub button clicked');
+                          handleOAuthSignIn('github');
+                        }}
+                        disabled={oauthLoading === 'github'}
+                      >
+                        {oauthLoading === 'github' ? (
+                          <div className="flex items-center justify-center">
+                            <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                            <span>Connecting...</span>
+                          </div>
+                        ) : (
+                          <>
+                            <Github className="mr-2 h-5 w-5" />
+                            GitHub
+                          </>
+                        )}
+                      </Button>
 
-                      <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                        <Button
-                          type="button"
-                          className="w-full py-6 transition-all duration-200 bg-slate-700/50 border border-slate-600 text-white hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600 hover:text-white focus:bg-gradient-to-r focus:from-blue-500 focus:to-purple-600 focus:text-white active:bg-gradient-to-r active:from-blue-500 active:to-purple-600 active:text-white flex items-center justify-center"
-                          onClick={() => handleOAuthSignIn('google')}
-                        >
-                          <Mail className="mr-2 h-5 w-5" />
-                          Google
-                        </Button>
-                      </motion.div>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        className="w-full py-6 bg-slate-700/50 border border-slate-600 text-white hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600 hover:text-white hover:border-transparent transition-all duration-200"
+                        onClick={() => {
+                          console.log('Google button clicked');
+                          handleOAuthSignIn('google');
+                        }}
+                        disabled={oauthLoading === 'google'}
+                      >
+                        {oauthLoading === 'google' ? (
+                          <div className="flex items-center justify-center">
+                            <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                            <span>Connecting...</span>
+                          </div>
+                        ) : (
+                          <>
+                            <Mail className="mr-2 h-5 w-5" />
+                            Google
+                          </>
+                        )}
+                      </Button>
                     </div>
                   </motion.form>
                 </AnimatePresence>
