@@ -85,12 +85,12 @@ export const SnippetsView = () => {
   };
 
   const handleDelete = async (id: string) => {
-    try {
-      await deleteSnippet.mutateAsync(id);
+      try {
+        await deleteSnippet.mutateAsync(id);
       toast.success('Snippet deleted');
-    } catch (error) {
-      toast.error('Failed to delete snippet');
-    }
+      } catch (error) {
+        toast.error('Failed to delete snippet');
+      }
   };
 
   const handleToggleFavorite = async (snippet: Snippet) => {
@@ -168,12 +168,12 @@ export const SnippetsView = () => {
       {isFiltering ? (
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {filteredSnippets.map(snippet => (
-            <Card key={snippet.id} className="bg-slate-800 border-slate-700">
+            <Card key={snippet.id} className="bg-gradient-to-br from-slate-800 via-slate-900 to-slate-950 border border-slate-700 rounded-2xl shadow-lg shadow-blue-900/20 relative">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-lg font-semibold text-white">
-                  {snippet.title}
-                </CardTitle>
-                <div className="flex space-x-2">
+                    {snippet.title}
+                  </CardTitle>
+                  <div className="flex space-x-2">
                   <Button
                     variant="ghost"
                     size="icon"
@@ -190,14 +190,14 @@ export const SnippetsView = () => {
                       className="text-slate-400 hover:text-white"
                     >
                       <Edit className="w-4 h-4" />
-                    </Button>
-                  </Link>
-                  <Button
-                    variant="ghost"
+                      </Button>
+                    </Link>
+                    <Button
+                      variant="ghost"
                     size="icon"
-                    onClick={() => handleDelete(snippet.id)}
-                    className="text-slate-400 hover:text-red-400"
-                  >
+                      onClick={() => handleDelete(snippet.id)}
+                      className="text-slate-400 hover:text-red-400"
+                    >
                     <Trash2 className="w-4 h-4" />
                   </Button>
                   <Button
@@ -208,7 +208,7 @@ export const SnippetsView = () => {
                     aria-label={snippet.is_favorite ? 'Unfavorite' : 'Favorite'}
                   >
                     <Heart className="w-4 h-4" fill={snippet.is_favorite ? 'currentColor' : 'none'} />
-                  </Button>
+                    </Button>
                 </div>
               </CardHeader>
               <CardContent>
@@ -244,7 +244,10 @@ export const SnippetsView = () => {
                       })}
                     </div>
                   )}
-                  <pre className="text-sm text-slate-400 bg-slate-900 p-3 rounded-md overflow-x-auto min-h-[100px] max-h-[100px] whitespace-pre-line font-mono">
+                  <pre
+                    className="text-sm text-slate-400 bg-slate-900 p-3 rounded-md w-full block overflow-x-auto min-h-[100px] max-h-60 whitespace-pre font-mono"
+                    style={{ boxSizing: 'border-box' }}
+                  >
                     {snippet.content}
                   </pre>
                 </div>
@@ -267,7 +270,7 @@ export const SnippetsView = () => {
                 {recentlyAdded.map(snippet => {
                   shownSnippetIds.add(snippet.id);
                   return (
-                    <Card key={snippet.id} className="bg-slate-800 border-slate-700">
+                    <Card key={snippet.id} className="bg-gradient-to-br from-slate-800 via-slate-900 to-slate-950 border border-slate-700 rounded-2xl shadow-lg shadow-blue-900/20 relative">
                       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-lg font-semibold text-white">
                           {snippet.title}
@@ -289,8 +292,8 @@ export const SnippetsView = () => {
                               className="text-slate-400 hover:text-white"
                             >
                               <Edit className="w-4 h-4" />
-                            </Button>
-                          </Link>
+            </Button>
+          </Link>
                           <Button
                             variant="ghost"
                             size="icon"
@@ -343,7 +346,10 @@ export const SnippetsView = () => {
                               })}
                             </div>
                           )}
-                          <pre className="text-sm text-slate-400 bg-slate-900 p-3 rounded-md overflow-x-auto min-h-[100px] max-h-[100px] whitespace-pre-line font-mono">
+                          <pre
+                            className="text-sm text-slate-400 bg-slate-900 p-3 rounded-md w-full block overflow-x-auto min-h-[100px] max-h-60 whitespace-pre font-mono"
+                            style={{ boxSizing: 'border-box' }}
+                          >
                             {snippet.content}
                           </pre>
                         </div>
@@ -354,7 +360,7 @@ export const SnippetsView = () => {
                 {recentlyAdded.length === 0 && <div className="text-slate-400">No recent snippets.</div>}
               </div>
             )}
-          </div>
+        </div>
         </>
       )}
 
@@ -388,7 +394,10 @@ export const SnippetsView = () => {
             )}
             <div className="mb-4">
               <span className="font-semibold text-slate-300">Code:</span>
-              <pre className="bg-slate-800 text-slate-100 rounded-lg p-4 mt-2 font-mono text-sm overflow-x-auto">
+              <pre
+                className="text-sm text-slate-400 bg-slate-900 p-3 rounded-md w-full block overflow-x-auto min-h-[100px] max-h-60 whitespace-pre font-mono"
+                style={{ boxSizing: 'border-box' }}
+              >
                 <code>{previewSnippet?.content}</code>
               </pre>
             </div>

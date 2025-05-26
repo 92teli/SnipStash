@@ -100,9 +100,9 @@ export function Footer() {
                         {link.name}
                         <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-gradient-to-r from-blue-400 to-purple-500 transition-all duration-300 group-hover:w-full" />
                       </Link>
-                    </li>
+              </li>
                   ))}
-                </ul>
+            </ul>
               </motion.div>
             )
           })}
@@ -116,7 +116,7 @@ export function Footer() {
           className="mt-16 pt-8 border-t border-slate-800"
         >
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <p className="text-gray-400 text-sm">
+          <p className="text-gray-400 text-sm">
               © {new Date().getFullYear()} SnipStash. All rights reserved.
             </p>
             <div className="flex space-x-6">
@@ -129,7 +129,7 @@ export function Footer() {
               <Link href="/cookies" className="text-gray-400 hover:text-blue-400 text-sm transition-colors duration-300">
                 Cookie Policy
               </Link>
-            </div>
+              </div>
           </div>
         </motion.div>
       </div>

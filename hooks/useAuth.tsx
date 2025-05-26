@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
@@ -50,8 +49,16 @@ export const useAuth = () => {
   };
 
   const signOut = async () => {
-    const { error } = await supabase.auth.signOut();
-    return { error };
+    try {
+      const { error } = await supabase.auth.signOut();
+      setUser(null);
+      setSession(null);
+      return { error };
+    } catch (error) {
+      setUser(null);
+      setSession(null);
+      return { error };
+    }
   };
 
   return {

@@ -13,7 +13,7 @@ export const CollectionsView = () => {
   const { data: collections, isLoading } = useCollections();
   const createCollection = useCreateCollection();
   const deleteCollection = useDeleteCollection();
-
+  
   const filteredCollections = collections?.filter(collection =>
     collection.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
@@ -32,11 +32,11 @@ export const CollectionsView = () => {
   };
 
   const handleDeleteCollection = async (id: string) => {
-    try {
-      await deleteCollection.mutateAsync(id);
-      toast.success('Collection deleted successfully');
-    } catch (error) {
-      toast.error('Failed to delete collection');
+      try {
+        await deleteCollection.mutateAsync(id);
+        toast.success('Collection deleted successfully');
+      } catch (error) {
+        toast.error('Failed to delete collection');
     }
   };
 
@@ -52,8 +52,8 @@ export const CollectionsView = () => {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold text-white">Collections</h1>
-      </div>
-
+        </div>
+        
       <div className="grid gap-6 md:grid-cols-2">
         <Card className="bg-slate-800 border-slate-700">
           <CardHeader>
@@ -61,16 +61,16 @@ export const CollectionsView = () => {
           </CardHeader>
           <CardContent>
             <form onSubmit={handleCreateCollection} className="space-y-4">
-              <Input
+                <Input
                 value={newCollectionName}
                 onChange={(e) => setNewCollectionName(e.target.value)}
                 placeholder="Enter collection name"
                 className="bg-slate-700 border-slate-600 text-white"
-              />
-              <Button
+                />
+                <Button
                 type="submit"
                 className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 border-0 shadow-lg shadow-blue-500/25"
-                disabled={createCollection.isPending}
+                  disabled={createCollection.isPending}
               >
                 <Plus className="w-4 h-4 mr-2" />
                 Create Collection
@@ -79,17 +79,17 @@ export const CollectionsView = () => {
           </CardContent>
         </Card>
 
-        <div className="space-y-4">
+              <div className="space-y-4">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" />
-            <Input
+                  <Input
               placeholder="Search collections..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pl-10 bg-slate-800 border-slate-700 text-white"
-            />
-          </div>
-
+                  />
+                </div>
+                
           <div className="space-y-2">
             {filteredCollections?.map((collection) => (
               <Card key={collection.id} className="bg-slate-800 border-slate-700">
@@ -112,7 +112,7 @@ export const CollectionsView = () => {
                 </CardContent>
               </Card>
             ))}
-          </div>
+              </div>
         </div>
       </div>
     </div>

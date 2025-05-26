@@ -29,6 +29,7 @@ import {
 import { ParticleBackground } from "@/components/particle-background"
 import { useAuth } from "@/hooks/useAuth"
 import { toast } from "sonner"
+import { supabase } from '@/integrations/supabase/client'
 
 export default function SignInPage() {
   const [showPassword, setShowPassword] = useState(false)
@@ -69,6 +70,22 @@ export default function SignInPage() {
     }
     setIsLoading(false)
   }
+
+  const handleOAuthSignIn = async (provider: 'github' | 'google') => {
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider,
+        options: {
+          redirectTo: typeof window !== 'undefined' ? window.location.origin + '/dashboard' : undefined,
+        },
+      });
+      if (error) {
+        toast.error(`Failed to sign in with ${provider}`);
+      }
+    } catch (err) {
+      toast.error(`Failed to sign in with ${provider}`);
+    }
+  };
 
   const features = [
     {
@@ -616,8 +633,8 @@ export default function SignInPage() {
                       >
                         <label className="flex items-center space-x-2 cursor-pointer select-none group">
                           <span className="relative w-5 h-5 flex-shrink-0">
-                            <input
-                              type="checkbox"
+                          <input
+                            type="checkbox"
                               checked={rememberMe}
                               onChange={e => setRememberMe(e.target.checked)}
                               className="appearance-none w-5 h-5 rounded-md border border-slate-600 bg-slate-800 checked:bg-gradient-to-br checked:from-blue-500 checked:to-purple-500 checked:border-blue-500 transition-all duration-200 focus:ring-2 focus:ring-blue-500/30 focus:outline-none"
@@ -692,6 +709,7 @@ export default function SignInPage() {
                         <Button
                           type="button"
                           className="w-full py-6 transition-all duration-200 bg-slate-700/50 border border-slate-600 text-white hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600 hover:text-white focus:bg-gradient-to-r focus:from-blue-500 focus:to-purple-600 focus:text-white active:bg-gradient-to-r active:from-blue-500 active:to-purple-600 active:text-white flex items-center justify-center"
+                          onClick={() => handleOAuthSignIn('github')}
                         >
                           <Github className="mr-2 h-5 w-5" />
                           GitHub
@@ -702,6 +720,7 @@ export default function SignInPage() {
                         <Button
                           type="button"
                           className="w-full py-6 transition-all duration-200 bg-slate-700/50 border border-slate-600 text-white hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600 hover:text-white focus:bg-gradient-to-r focus:from-blue-500 focus:to-purple-600 focus:text-white active:bg-gradient-to-r active:from-blue-500 active:to-purple-600 active:text-white flex items-center justify-center"
+                          onClick={() => handleOAuthSignIn('google')}
                         >
                           <Mail className="mr-2 h-5 w-5" />
                           Google

@@ -93,16 +93,16 @@ export const CollectionDetailView = () => {
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Collections
-          </Button>
+            </Button>
           <h1 className="text-2xl font-bold text-white">{collection.name}</h1>
         </div>
         <div className="flex gap-2">
-          <Button
+                  <Button
             className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 border-0 shadow-lg shadow-blue-500/25"
             onClick={() => setShowAddModal(true)}
           >
             + Add to Collection
-          </Button>
+                  </Button>
           <Button
             className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 border-0 shadow-lg shadow-blue-500/25"
             onClick={() => router.push(`/dashboard/snippets/new?collectionId=${collection.id}`)}
@@ -120,26 +120,26 @@ export const CollectionDetailView = () => {
           onChange={(e) => setSearchQuery(e.target.value)}
           className="pl-10 bg-slate-800 border-slate-700 text-white"
         />
-      </div>
+        </div>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {filteredSnippets?.map((snippet) => (
           <Card key={snippet.id} className="bg-gradient-to-br from-slate-800 via-slate-900 to-slate-950 border border-slate-700 rounded-2xl shadow-lg shadow-blue-900/20 flex flex-col h-full min-h-[420px]">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-lg font-bold text-white tracking-tight">
-                {snippet.title}
-              </CardTitle>
-              <div className="flex space-x-2">
-                <Button
-                  variant="ghost"
+                    {snippet.title}
+                  </CardTitle>
+                  <div className="flex space-x-2">
+                    <Button
+                      variant="ghost"
                   size="icon"
                   onClick={() => handleCopy(snippet.id, snippet.content)}
-                  className="text-slate-400 hover:text-white"
-                >
+                      className="text-slate-400 hover:text-white"
+                    >
                   <Copy className="w-4 h-4" />
-                </Button>
-                <Button
-                  variant="ghost"
+                    </Button>
+                      <Button
+                        variant="ghost"
                   size="icon"
                   onClick={() => handleRemoveSnippet(snippet.id)}
                   className="text-slate-400 hover:text-red-400"
@@ -181,19 +181,22 @@ export const CollectionDetailView = () => {
                   })}
                 </div>
               )}
-              <pre className="text-sm text-slate-200 bg-slate-900/90 p-3 rounded-lg border border-slate-800 font-mono shadow-inner flex-1 min-h-[100px] max-h-[100px] overflow-y-auto whitespace-pre-line">
+              <pre
+                className="text-sm text-slate-200 bg-slate-900/90 p-3 rounded-lg border border-slate-800 font-mono shadow-inner w-full block flex-1 min-h-[100px] max-h-60 overflow-x-auto whitespace-pre"
+                style={{ boxSizing: 'border-box' }}
+              >
                 {snippet.content}
               </pre>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
 
       <Dialog open={showAddModal} onOpenChange={setShowAddModal}>
         <DialogContent className="max-w-2xl bg-slate-900 border-slate-800">
-          <DialogHeader>
+              <DialogHeader>
             <DialogTitle className="text-white">Add Snippets to Collection</DialogTitle>
-          </DialogHeader>
+              </DialogHeader>
           <Input
             placeholder="Search snippets..."
             value={snippetSearch}
@@ -244,16 +247,16 @@ export const CollectionDetailView = () => {
             ))}
           </div>
           <DialogFooter>
-            <Button
+                  <Button
               onClick={handleAddSnippets}
               disabled={selectedSnippetIds.length === 0 || addSnippetToCollection.isPending}
               className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 border-0 shadow-lg shadow-blue-500/25"
-            >
+                  >
               Add Selected
-            </Button>
+                  </Button>
           </DialogFooter>
-        </DialogContent>
-      </Dialog>
+            </DialogContent>
+          </Dialog>
     </div>
   );
 };

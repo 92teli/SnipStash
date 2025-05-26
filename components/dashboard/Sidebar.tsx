@@ -36,14 +36,14 @@ export const Sidebar = () => {
             <Link href={item.to} key={item.to} legacyBehavior>
               <a
                 className={cn(
-                  'flex items-center space-x-3 px-3 py-2 rounded-lg transition-colors',
-                  isActive
+                'flex items-center space-x-3 px-3 py-2 rounded-lg transition-colors',
+                isActive
                     ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow'
-                    : 'text-slate-300 hover:bg-slate-700 hover:text-white'
+                  : 'text-slate-300 hover:bg-slate-700 hover:text-white'
                 )}
-              >
-                <item.icon size={20} />
-                <span>{item.label}</span>
+          >
+            <item.icon size={20} />
+            <span>{item.label}</span>
               </a>
             </Link>
           );
@@ -59,7 +59,7 @@ export const Sidebar = () => {
                   className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white rounded-full shadow"
                 >
                   <Plus size={16} />
-                </Button>
+              </Button>
               </a>
             </Link>
           </div>
@@ -73,18 +73,18 @@ export const Sidebar = () => {
                     <a
                       className={cn(
                         'flex items-center gap-3 px-3 py-2 rounded-lg transition-all group',
-                        isActive
+                      isActive
                           ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow'
                           : 'text-slate-300 hover:bg-slate-700 hover:text-white'
                       )}
                       style={{ fontWeight: isActive ? 600 : 500 }}
-                    >
+                >
                       <FolderOpen
                         size={18}
                         style={{ color: collection.color || '#3B82F6' }}
                         className="flex-shrink-0"
-                      />
-                      <span className="truncate">{collection.name}</span>
+                  />
+                  <span className="truncate">{collection.name}</span>
                     </a>
                   </Link>
                 );
@@ -92,7 +92,7 @@ export const Sidebar = () => {
               {collections.length > 5 && (
                 <Link href="/dashboard/collections" legacyBehavior>
                   <a className="block px-3 py-1.5 text-xs font-semibold text-blue-400 hover:text-white hover:bg-blue-600/30 rounded transition">
-                    View all collections...
+                  View all collections...
                   </a>
                 </Link>
               )}
@@ -107,9 +107,9 @@ export const Sidebar = () => {
         <Link href="/dashboard/snippets/new" legacyBehavior>
           <a>
             <Button className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 border-0 shadow-lg shadow-blue-500/25">
-              <Plus size={16} className="mr-2" />
-              New Snippet
-            </Button>
+            <Plus size={16} className="mr-2" />
+            New Snippet
+          </Button>
           </a>
         </Link>
       </div>

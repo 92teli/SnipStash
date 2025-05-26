@@ -110,11 +110,16 @@ export const SettingsView = () => {
 
   const handleLogout = async () => {
     try {
-      await supabase.auth.signOut();
+      const { error } = await supabase.auth.signOut();
+      if (error && error.status !== 403) {
+        toast.error('Failed to log out');
+      } else {
+        toast.success('Signed out successfully');
+      }
       router.push('/');
-    } catch (error) {
-      toast.error('Failed to log out');
-      console.error('Logout error:', error);
+    } catch (err) {
+      toast.success('Signed out successfully');
+      router.push('/');
     }
   };
 

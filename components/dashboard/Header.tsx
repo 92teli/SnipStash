@@ -9,10 +9,15 @@ export const Header = () => {
   const router = useRouter();
 
   const handleSignOut = async () => {
-    const { error } = await signOut();
-    if (error) {
-      toast.error('Error signing out');
-    } else {
+    try {
+      const { error } = await signOut();
+      if (error && error.status !== 403) {
+        toast.error('Error signing out');
+      } else {
+        toast.success('Signed out successfully');
+      }
+      router.push('/');
+    } catch (err) {
       toast.success('Signed out successfully');
       router.push('/');
     }
