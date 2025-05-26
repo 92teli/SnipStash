@@ -1,14 +1,14 @@
-
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from 'sonner';
-import { Navigate } from 'react-router-dom';
 
 const Auth = () => {
+  const router = useRouter();
   const { user, signIn, signUp } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -16,7 +16,8 @@ const Auth = () => {
   const [loading, setLoading] = useState(false);
 
   if (user) {
-    return <Navigate to="/dashboard" replace />;
+    router.replace('/dashboard');
+    return null;
   }
 
   const handleSignIn = async (e: React.FormEvent) => {
@@ -29,6 +30,7 @@ const Auth = () => {
       toast.error(error.message);
     } else {
       toast.success('Signed in successfully!');
+      router.replace('/dashboard');
     }
     
     setLoading(false);
@@ -44,6 +46,7 @@ const Auth = () => {
       toast.error(error.message);
     } else {
       toast.success('Account created! Please check your email to verify.');
+      router.replace('/dashboard');
     }
     
     setLoading(false);

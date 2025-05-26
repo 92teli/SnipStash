@@ -1,12 +1,11 @@
-
-import { HeroSection } from '@/components/sections/HeroSection';
-import { FlowSection } from '@/components/sections/FlowSection';
-import { FeaturesSection } from '@/components/sections/FeaturesSection';
-import { TestimonialsSection } from '@/components/sections/TestimonialsSection';
-import { ComparisonSection } from '@/components/sections/ComparisonSection';
-import { CtaSection } from '@/components/sections/CtaSection';
-import { Header } from '@/components/layout/Header';
-import { Footer } from '@/components/layout/Footer';
+import { HeroSection } from '@/components/hero-section';
+import { DeveloperFlow } from '@/components/developer-flow';
+import { LiveActionCarousel } from '@/components/live-action-carousel';
+import { ComparisonSection } from '@/components/comparison-section';
+import { AnalyticsPeek } from '@/components/analytics-peek';
+import { FinalCTA } from '@/components/final-cta';
+import { Header } from '@/components/header';
+import { Footer } from '@/components/footer';
 
 const Index = () => {
   return (
@@ -14,11 +13,11 @@ const Index = () => {
       <Header />
       <main>
         <HeroSection />
-        <FlowSection />
-        <FeaturesSection />
-        <TestimonialsSection />
+        <DeveloperFlow />
+        <LiveActionCarousel />
         <ComparisonSection />
-        <CtaSection />
+        <AnalyticsPeek />
+        <FinalCTA />
       </main>
       <Footer />
     </div>
