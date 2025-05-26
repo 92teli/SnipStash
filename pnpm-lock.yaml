@@ -9100,7 +9100,7 @@ snapshots:
       '@types/react': 19.1.5
       react: 19.1.0
 
-  zustand@5.0.5(@types/react@19.1.5)(react@19.1.0)(use-sync-external-store@1.5.0(react@19.1.0)):
+  zustand@5.0.5(@types/react@19.1.5)(react@19.1.0)(use-sync-external-store@1.5.0(react@19.1.0)): 
     optionalDependencies:
       '@types/react': 19.1.5
       react: 19.1.0
