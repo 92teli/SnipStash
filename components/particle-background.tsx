@@ -115,7 +115,7 @@ export function ParticleBackground() {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 z-0 pointer-events-none opacity-90 backdrop-blur-sm"
+      className="fixed inset-0 z-0 pointer-events-none opacity-90"
       style={{ background: "transparent" }}
     />
   )

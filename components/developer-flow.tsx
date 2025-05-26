@@ -43,7 +43,7 @@ export function DeveloperFlow() {
   const isInView = useInView(ref, { once: true, margin: "-100px" })
 
   return (
-    <section ref={ref} className="py-32 px-4 relative z-10 overflow-hidden">
+    <section id="features" ref={ref} className="py-32 px-4 relative z-10 overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0 bg-gradient-to-b from-slate-900/50 to-slate-800/30" />
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-radial from-blue-500/5 to-transparent rounded-full blur-3xl" />
@@ -62,7 +62,7 @@ export function DeveloperFlow() {
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             <span className="text-sm font-mono text-blue-400 bg-blue-500/10 px-4 py-2 rounded-full border border-blue-500/20">
-              ⚡ DEVELOPER WORKFLOW
+              ⚡ DEVELOPER FEATURES WORKFLOW
             </span>
           </motion.div>
 

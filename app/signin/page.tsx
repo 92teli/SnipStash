@@ -1,8 +1,8 @@
 "use client"
 
 import type React from "react"
-
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
@@ -27,17 +27,46 @@ import {
   Fingerprint,
 } from "lucide-react"
 import { ParticleBackground } from "@/components/particle-background"
+import { useAuth } from "@/hooks/useAuth"
+import { toast } from "sonner"
 
 export default function SignInPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [activeTab, setActiveTab] = useState<"signin" | "signup">("signin")
+  const [rememberMe, setRememberMe] = useState(false)
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [name, setName] = useState("")
+  const router = useRouter()
+  const { user, signIn, signUp } = useAuth()
+
+  // If already logged in, redirect to dashboard
+  if (typeof window !== "undefined" && user) {
+    router.replace("/dashboard")
+    return null
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000))
+    if (activeTab === "signin") {
+      const { error } = await signIn(email, password)
+      if (error) {
+        toast.error(error.message)
+      } else {
+        toast.success("Signed in successfully!")
+        router.replace("/dashboard")
+      }
+    } else {
+      const { error } = await signUp(email, password, name)
+      if (error) {
+        toast.error(error.message)
+      } else {
+        toast.success("Account created! Please check your email to verify.")
+        router.replace("/dashboard")
+      }
+    }
     setIsLoading(false)
   }
 
@@ -70,7 +99,7 @@ export default function SignInPage() {
         animate={{ y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <div className="container mx-auto px-4 py-4">
+        <div className="container mx-auto px-2 sm:px-4 py-4">
           <div className="flex items-center justify-between">
             <motion.a href="/" className="flex items-center space-x-2" whileHover={{ scale: 1.05 }}>
               <Code2 className="h-8 w-8 text-blue-400" />
@@ -88,8 +117,8 @@ export default function SignInPage() {
         </div>
       </motion.header>
 
-      <div className="pt-20 min-h-screen flex items-center justify-center px-4">
-        <div className="w-full max-w-6xl grid lg:grid-cols-2 gap-12 items-center">
+      <div className="pt-20 min-h-screen flex items-center justify-center px-2 sm:px-4">
+        <div className="w-full max-w-full sm:max-w-2xl md:max-w-4xl lg:max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-10 lg:gap-12 items-center">
           {/* Left Side - Branding & Features */}
           <motion.div
             className="space-y-8"
@@ -110,7 +139,7 @@ export default function SignInPage() {
               </motion.div>
 
               <motion.h1
-                className="text-4xl lg:text-6xl font-bold leading-tight"
+                className="text-2xl sm:text-4xl lg:text-6xl font-bold leading-tight"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
@@ -124,7 +153,7 @@ export default function SignInPage() {
               </motion.h1>
 
               <motion.p
-                className="text-xl text-gray-300 leading-relaxed"
+                className="text-base sm:text-xl text-gray-300 leading-relaxed"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
@@ -155,7 +184,7 @@ export default function SignInPage() {
                   />
 
                   <motion.div
-                    className="relative flex items-center space-x-4 p-4 bg-slate-800/40 rounded-xl border border-slate-700/50 backdrop-blur-sm"
+                    className="relative flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-4 p-3 sm:p-4 bg-slate-800/40 rounded-xl border border-slate-700/50 backdrop-blur-sm"
                     whileHover={{
                       scale: 1.02,
                       backgroundColor: "rgba(51, 65, 85, 0.6)",
@@ -188,7 +217,7 @@ export default function SignInPage() {
 
             {/* Terminal Preview */}
             <motion.div
-              className="bg-slate-800/60 rounded-lg p-4 border border-slate-700 font-mono text-sm"
+              className="bg-slate-800/60 rounded-lg p-3 sm:p-4 border border-slate-700 font-mono text-sm overflow-x-auto"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8 }}
@@ -212,7 +241,7 @@ export default function SignInPage() {
 
           {/* Right Side - Enhanced Auth Form */}
           <motion.div
-            className="relative"
+            className="relative mt-8 lg:mt-0"
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -232,9 +261,9 @@ export default function SignInPage() {
               }}
             />
 
-            <Card className="relative bg-slate-800/95 backdrop-blur-xl border border-slate-700/50 shadow-2xl overflow-hidden">
+            <Card className="relative bg-slate-800/95 backdrop-blur-xl border border-slate-700/50 shadow-2xl overflow-hidden rounded-lg sm:rounded-2xl p-4 sm:p-8">
               {/* Card Header with Enhanced Gradient */}
-              <div className="relative p-8 pb-6">
+              <div className="relative p-4 sm:p-8 pb-6">
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-500/8 via-purple-500/8 to-cyan-500/8" />
 
                 {/* Floating Particles */}
@@ -281,15 +310,15 @@ export default function SignInPage() {
                   <div className="relative bg-slate-800/60 backdrop-blur-xl rounded-2xl p-2 border border-slate-600/30 shadow-2xl">
                     {/* Animated Background Indicator */}
                     <motion.div
-                      className="absolute top-2 bottom-2 rounded-xl shadow-2xl"
+                      className="absolute top-2 bottom-2 left-0 rounded-xl shadow-2xl"
                       style={{
                         background: "linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #06b6d4 100%)",
                         boxShadow: "0 8px 32px rgba(59, 130, 246, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2)",
                       }}
                       initial={false}
                       animate={{
-                        x: activeTab === "signin" ? 4 : "calc(50% + 4px)",
-                        width: "calc(50% - 8px)",
+                        x: activeTab === "signin" ? "0%" : "100%",
+                        width: "50%",
                       }}
                       transition={{
                         type: "spring",
@@ -502,10 +531,10 @@ export default function SignInPage() {
                     key={activeTab}
                     onSubmit={handleSubmit}
                     className="space-y-6"
-                    initial={{ opacity: 0, x: activeTab === "signin" ? -30 : 30 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: activeTab === "signin" ? 30 : -30 }}
-                    transition={{ duration: 0.4, type: "spring", stiffness: 300 }}
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 16 }}
+                    transition={{ duration: 0.18, ease: "easeInOut" }}
                   >
                     {activeTab === "signup" && (
                       <motion.div
@@ -525,6 +554,8 @@ export default function SignInPage() {
                             placeholder="John Doe"
                             className="bg-slate-700/50 border-slate-600 text-white placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500/20 focus:ring-2 transition-all duration-200 pl-10"
                             required
+                            value={name}
+                            onChange={e => setName(e.target.value)}
                           />
                           <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
                         </div>
@@ -542,6 +573,8 @@ export default function SignInPage() {
                           placeholder="dev@example.com"
                           className="bg-slate-700/50 border-slate-600 text-white placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500/20 focus:ring-2 transition-all duration-200 pl-10"
                           required
+                          value={email}
+                          onChange={e => setEmail(e.target.value)}
                         />
                         <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
                       </div>
@@ -558,6 +591,8 @@ export default function SignInPage() {
                           placeholder="••••••••"
                           className="bg-slate-700/50 border-slate-600 text-white placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500/20 focus:ring-2 transition-all duration-200 pl-10 pr-10"
                           required
+                          value={password}
+                          onChange={e => setPassword(e.target.value)}
                         />
                         <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
                         <motion.button
@@ -579,12 +614,23 @@ export default function SignInPage() {
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.2 }}
                       >
-                        <label className="flex items-center space-x-2 cursor-pointer">
-                          <input
-                            type="checkbox"
-                            className="rounded border-slate-600 bg-slate-700 text-blue-500 focus:ring-blue-500/20"
-                          />
-                          <span className="text-sm text-gray-400">Remember me</span>
+                        <label className="flex items-center space-x-2 cursor-pointer select-none group">
+                          <span className="relative w-5 h-5 flex-shrink-0">
+                            <input
+                              type="checkbox"
+                              checked={rememberMe}
+                              onChange={e => setRememberMe(e.target.checked)}
+                              className="appearance-none w-5 h-5 rounded-md border border-slate-600 bg-slate-800 checked:bg-gradient-to-br checked:from-blue-500 checked:to-purple-500 checked:border-blue-500 transition-all duration-200 focus:ring-2 focus:ring-blue-500/30 focus:outline-none"
+                            />
+                            {rememberMe && (
+                              <span className="absolute left-0 top-0 w-full h-full flex items-center justify-center pointer-events-none">
+                                <svg className="w-4 h-4 text-white" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2">
+                                  <path d="M6 10l3 3l5-5" strokeLinecap="round" strokeLinejoin="round" />
+                                </svg>
+                              </span>
+                            )}
+                          </span>
+                          <span className="text-sm text-gray-400 group-hover:text-white transition-colors duration-200">Remember me</span>
                         </label>
                         <motion.a
                           href="#"
@@ -645,8 +691,7 @@ export default function SignInPage() {
                       <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                         <Button
                           type="button"
-                          variant="outline"
-                          className="w-full bg-slate-700/50 border-slate-600 text-white hover:bg-slate-700 hover:border-slate-500 py-6 transition-all duration-200"
+                          className="w-full py-6 transition-all duration-200 bg-slate-700/50 border border-slate-600 text-white hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600 hover:text-white focus:bg-gradient-to-r focus:from-blue-500 focus:to-purple-600 focus:text-white active:bg-gradient-to-r active:from-blue-500 active:to-purple-600 active:text-white flex items-center justify-center"
                         >
                           <Github className="mr-2 h-5 w-5" />
                           GitHub
@@ -656,8 +701,7 @@ export default function SignInPage() {
                       <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                         <Button
                           type="button"
-                          variant="outline"
-                          className="w-full bg-slate-700/50 border-slate-600 text-white hover:bg-slate-700 hover:border-slate-500 py-6 transition-all duration-200"
+                          className="w-full py-6 transition-all duration-200 bg-slate-700/50 border border-slate-600 text-white hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600 hover:text-white focus:bg-gradient-to-r focus:from-blue-500 focus:to-purple-600 focus:text-white active:bg-gradient-to-r active:from-blue-500 active:to-purple-600 active:text-white flex items-center justify-center"
                         >
                           <Mail className="mr-2 h-5 w-5" />
                           Google

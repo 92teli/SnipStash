@@ -1,124 +1,137 @@
 "use client"
 
-import { useState } from "react"
-import { Code2, Heart, Coffee } from "lucide-react"
+import { motion } from "framer-motion"
+import { Code2, Github, Twitter, Linkedin, Mail } from "lucide-react"
+import Link from "next/link"
+
+const footerLinks = {
+  product: [
+    { name: "Features", href: "#features" },
+    { name: "Folders", href: "#folders" },
+    { name: "Analytics", href: "#analytics" },
+    { name: "Pricing", href: "/pricing" },
+  ],
+  company: [
+    { name: "About", href: "/about" },
+    { name: "Blog", href: "/blog" },
+    { name: "Careers", href: "/careers" },
+    { name: "Contact", href: "/contact" },
+  ],
+  resources: [
+    { name: "Documentation", href: "/docs" },
+    { name: "API Reference", href: "/api" },
+    { name: "Status", href: "/status" },
+    { name: "Terms of Service", href: "/terms" },
+  ],
+  social: [
+    { name: "GitHub", icon: Github, href: "https://github.com" },
+    { name: "Twitter", icon: Twitter, href: "https://twitter.com" },
+    { name: "LinkedIn", icon: Linkedin, href: "https://linkedin.com" },
+    { name: "Email", icon: Mail, href: "mailto:contact@snipstash.com" },
+  ],
+}
 
 export function Footer() {
-  const [easterEgg, setEasterEgg] = useState(false)
-
-  const handleEasterEgg = () => {
-    setEasterEgg(!easterEgg)
-  }
-
   return (
-    <footer className="relative z-10 bg-slate-900/90 backdrop-blur-sm border-t border-slate-800">
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid md:grid-cols-4 gap-8">
-          <div className="space-y-4">
-            <div className="flex items-center space-x-2">
-              <Code2 className="h-6 w-6 text-blue-400" />
-              <span className="text-xl font-bold">SnipStash</span>
-            </div>
-            <p className="text-gray-400 text-sm leading-relaxed">
-              Your second brain for code. Built by developers, for developers.
-            </p>
-          </div>
+    <footer className="relative bg-slate-900 border-t border-slate-800">
+      {/* Gradient Orbs */}
+      <div className="absolute top-0 left-0 w-96 h-96 bg-blue-500/10 rounded-full filter blur-3xl -translate-x-1/2 -translate-y-1/2" />
+      <div className="absolute top-0 right-0 w-96 h-96 bg-purple-500/10 rounded-full filter blur-3xl translate-x-1/2 -translate-y-1/2" />
 
-          <div>
-            <h4 className="font-semibold text-white mb-4">Product</h4>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors">
-                  Features
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors">
-                  Docs
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors">
-                  Blog
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors">
-                  Changelog
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="font-semibold text-white mb-4">Community</h4>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors">
-                  GitHub
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors">
-                  Discord
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors">
-                  Twitter
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors">
-                  Support
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="font-semibold text-white mb-4">Legal</h4>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors">
-                  Privacy
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors">
-                  Terms
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors">
-                  Security
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="border-t border-slate-800 mt-12 pt-8 flex flex-col md:flex-row items-center justify-between">
-          <p className="text-gray-400 text-sm">
-            © 2025 SnipStash. Built with <Heart className="inline h-4 w-4 text-red-400" /> and{" "}
-            <Coffee className="inline h-4 w-4 text-yellow-400" /> by devs, for devs.
-          </p>
-
-          <div className="mt-4 md:mt-0">
-            <button
-              onClick={handleEasterEgg}
-              className="text-gray-500 hover:text-blue-400 transition-colors text-sm font-mono"
+      <div className="relative container mx-auto px-4 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
+          {/* Brand Section */}
+          <div className="lg:col-span-2">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="flex items-center space-x-2 mb-6"
             >
-              //snip
-            </button>
-            {easterEgg && (
-              <div className="absolute bottom-4 right-4 bg-slate-800 border border-slate-700 rounded-lg p-4 shadow-xl">
-                <p className="text-sm text-gray-300 mb-2">🎉 Easter egg found!</p>
-                <p className="text-xs text-gray-400">Theme toggles coming soon...</p>
-              </div>
-            )}
+              <Code2 className="h-8 w-8 text-blue-400" />
+              <span className="text-2xl font-bold">SnipStash</span>
+            </motion.div>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="text-gray-400 mb-8 max-w-md"
+            >
+              The ultimate code snippet manager for developers. Organize, share, and track your code snippets with ease.
+            </motion.p>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="flex space-x-4"
+            >
+              {footerLinks.social.map((item) => (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-blue-400 transition-colors duration-300"
+                >
+                  <item.icon className="h-5 w-5" />
+                </a>
+              ))}
+            </motion.div>
           </div>
+
+          {/* Links Sections */}
+          {Object.entries(footerLinks).map(([category, links], index) => {
+            if (category === "social") return null
+            return (
+              <motion.div
+                key={category}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 * (index + 1) }}
+              >
+                <h3 className="text-white font-semibold mb-4 capitalize">{category}</h3>
+                <ul className="space-y-3">
+                  {links.map((link) => (
+                    <li key={link.name}>
+                      <Link
+                        href={link.href}
+                        className="text-gray-400 hover:text-blue-400 transition-colors duration-300 relative group"
+                      >
+                        {link.name}
+                        <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-gradient-to-r from-blue-400 to-purple-500 transition-all duration-300 group-hover:w-full" />
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            )
+          })}
         </div>
+
+        {/* Bottom Bar */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.5 }}
+          className="mt-16 pt-8 border-t border-slate-800"
+        >
+          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+            <p className="text-gray-400 text-sm">
+              © {new Date().getFullYear()} SnipStash. All rights reserved.
+            </p>
+            <div className="flex space-x-6">
+              <Link href="/privacy" className="text-gray-400 hover:text-blue-400 text-sm transition-colors duration-300">
+                Privacy Policy
+              </Link>
+              <Link href="/terms" className="text-gray-400 hover:text-blue-400 text-sm transition-colors duration-300">
+                Terms of Service
+              </Link>
+              <Link href="/cookies" className="text-gray-400 hover:text-blue-400 text-sm transition-colors duration-300">
+                Cookie Policy
+              </Link>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </footer>
   )
