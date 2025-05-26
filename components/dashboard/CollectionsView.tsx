@@ -105,7 +105,7 @@ export const CollectionsView = () => {
                     variant="ghost"
                     size="icon"
                     onClick={() => handleDeleteCollection(collection.id)}
-                    className="text-slate-400 hover:text-red-400"
+                    className="text-slate-400 hover:bg-gradient-to-r hover:from-red-500 hover:to-pink-600 hover:text-white"
                   >
                     <Trash2 className="w-4 h-4" />
                   </Button>

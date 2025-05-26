@@ -157,7 +157,7 @@ export const SnippetsView = () => {
         </select>
         <Button
           variant={showFavorites ? 'default' : 'outline'}
-          className={showFavorites ? 'bg-emerald-600 text-white' : 'text-slate-400'}
+          className={showFavorites ? 'bg-gradient-to-r from-emerald-500 to-blue-500 text-white' : 'bg-gradient-to-r from-slate-600 to-slate-700 text-slate-300 hover:from-slate-500 hover:to-slate-600'}
           onClick={() => setShowFavorites(fav => !fav)}
         >
           <Heart className="w-4 h-4 mr-1" fill={showFavorites ? 'currentColor' : 'none'} />
@@ -178,7 +178,7 @@ export const SnippetsView = () => {
                     variant="ghost"
                     size="icon"
                     onClick={() => handleCopy(snippet.id, snippet.content)}
-                    className="text-slate-400 hover:text-blue-400"
+                    className="text-slate-400 hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600 hover:text-white"
                   >
                     <Copy className="w-4 h-4" />
                     <span className="ml-1 text-xs text-slate-400">{snippet.copy_count || 0}</span>
@@ -187,7 +187,7 @@ export const SnippetsView = () => {
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="text-slate-400 hover:text-white"
+                      className="text-slate-400 hover:bg-gradient-to-r hover:from-emerald-500 hover:to-blue-500 hover:text-white"
                     >
                       <Edit className="w-4 h-4" />
                       </Button>
@@ -196,7 +196,7 @@ export const SnippetsView = () => {
                       variant="ghost"
                     size="icon"
                       onClick={() => handleDelete(snippet.id)}
-                      className="text-slate-400 hover:text-red-400"
+                      className="text-slate-400 hover:bg-gradient-to-r hover:from-red-500 hover:to-pink-600 hover:text-white"
                     >
                     <Trash2 className="w-4 h-4" />
                   </Button>
@@ -280,7 +280,7 @@ export const SnippetsView = () => {
                             variant="ghost"
                             size="icon"
                             onClick={() => handleCopy(snippet.id, snippet.content)}
-                            className="text-slate-400 hover:text-blue-400"
+                            className="text-slate-400 hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600 hover:text-white"
                           >
                             <Copy className="w-4 h-4" />
                             <span className="ml-1 text-xs text-slate-400">{snippet.copy_count || 0}</span>
@@ -289,7 +289,7 @@ export const SnippetsView = () => {
                             <Button
                               variant="ghost"
                               size="icon"
-                              className="text-slate-400 hover:text-white"
+                              className="text-slate-400 hover:bg-gradient-to-r hover:from-emerald-500 hover:to-blue-500 hover:text-white"
                             >
                               <Edit className="w-4 h-4" />
             </Button>
@@ -298,7 +298,7 @@ export const SnippetsView = () => {
                             variant="ghost"
                             size="icon"
                             onClick={() => handleDelete(snippet.id)}
-                            className="text-slate-400 hover:text-red-400"
+                            className="text-slate-400 hover:bg-gradient-to-r hover:from-red-500 hover:to-pink-600 hover:text-white"
                           >
                             <Trash2 className="w-4 h-4" />
                           </Button>

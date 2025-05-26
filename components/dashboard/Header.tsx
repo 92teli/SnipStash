@@ -40,7 +40,7 @@ export const Header = () => {
           variant="ghost"
           size="sm"
           onClick={handleSignOut}
-          className="text-slate-400 hover:text-white"
+          className="text-slate-400 hover:bg-gradient-to-r hover:from-red-500 hover:to-pink-600 hover:text-white"
         >
           <LogOut size={16} className="mr-2" />
           Sign Out

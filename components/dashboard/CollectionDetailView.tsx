@@ -89,11 +89,11 @@ export const CollectionDetailView = () => {
           <Button
             variant="ghost"
             onClick={() => router.push('/dashboard/collections')}
-            className="text-slate-400 hover:text-white"
+            className="text-slate-400 hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600 hover:text-white"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Collections
-            </Button>
+          </Button>
           <h1 className="text-2xl font-bold text-white">{collection.name}</h1>
         </div>
         <div className="flex gap-2">
@@ -134,7 +134,7 @@ export const CollectionDetailView = () => {
                       variant="ghost"
                   size="icon"
                   onClick={() => handleCopy(snippet.id, snippet.content)}
-                      className="text-slate-400 hover:text-white"
+                      className="text-slate-400 hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600 hover:text-white"
                     >
                   <Copy className="w-4 h-4" />
                     </Button>
@@ -142,7 +142,7 @@ export const CollectionDetailView = () => {
                         variant="ghost"
                   size="icon"
                   onClick={() => handleRemoveSnippet(snippet.id)}
-                  className="text-slate-400 hover:text-red-400"
+                  className="text-slate-400 hover:bg-gradient-to-r hover:from-red-500 hover:to-pink-600 hover:text-white"
                 >
                   <Trash2 className="w-4 h-4" />
                 </Button>
