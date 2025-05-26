@@ -32,7 +32,17 @@ export const useAuth = () => {
       email,
       password,
     });
-    return { data, error };
+
+    if (error) {
+      return { 
+        data: null, 
+        error: { 
+          message: 'Invalid email or password' 
+        } 
+      };
+    }
+
+    return { data, error: null };
   };
 
   const signUp = async (email: string, password: string, fullName?: string) => {
@@ -49,16 +59,10 @@ export const useAuth = () => {
   };
 
   const signOut = async () => {
-    try {
-      const { error } = await supabase.auth.signOut();
-      setUser(null);
-      setSession(null);
-      return { error };
-    } catch (error) {
-      setUser(null);
-      setSession(null);
-      return { error };
-    }
+    const { error } = await supabase.auth.signOut();
+    setUser(null);
+    setSession(null);
+    return { error };
   };
 
   return {

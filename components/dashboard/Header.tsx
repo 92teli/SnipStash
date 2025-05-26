@@ -16,10 +16,10 @@ export const Header = () => {
       } else {
         toast.success('Signed out successfully');
       }
-      router.push('/');
+      router.push('/signin');
     } catch (err) {
       toast.success('Signed out successfully');
-      router.push('/');
+      router.push('/signin');
     }
   };
 

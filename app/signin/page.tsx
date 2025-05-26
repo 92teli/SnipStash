@@ -5,7 +5,7 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
@@ -25,6 +25,7 @@ import {
   CheckCircle,
   Star,
   Fingerprint,
+  AlertCircle,
 } from "lucide-react"
 import { ParticleBackground } from "@/components/particle-background"
 import { useAuth } from "@/hooks/useAuth"
@@ -36,8 +37,8 @@ export default function SignInPage() {
   const [isLoading, setIsLoading] = useState(false)
   const [activeTab, setActiveTab] = useState<"signin" | "signup">("signin")
   const [rememberMe, setRememberMe] = useState(false)
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const [email, setEmail] = useState("abctest@gmail.com")
+  const [password, setPassword] = useState("Abc123")
   const [name, setName] = useState("")
   const router = useRouter()
   const { user, signIn, signUp } = useAuth()
@@ -51,23 +52,57 @@ export default function SignInPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
+    
     if (activeTab === "signin") {
-      const { error } = await signIn(email, password)
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      })
+
       if (error) {
-        toast.error(error.message)
-      } else {
-        toast.success("Signed in successfully!")
-        router.replace("/dashboard")
+        console.error('Sign in error:', error)
+        toast.error('Invalid email or password', {
+          duration: 4000,
+          position: "top-center",
+          style: {
+            background: "#1e293b",
+            color: "#fff",
+            border: "1px solid #334155",
+          },
+        })
+        setIsLoading(false)
+        return
       }
+
+      toast.success("Signed in successfully!", {
+        duration: 2000,
+        position: "top-center",
+      })
+      router.replace("/dashboard")
     } else {
       const { error } = await signUp(email, password, name)
+      
       if (error) {
-        toast.error(error.message)
-      } else {
-        toast.success("Account created! Please check your email to verify.")
-        router.replace("/dashboard")
+        toast.error('Failed to create account', {
+          duration: 4000,
+          position: "top-center",
+          style: {
+            background: "#1e293b",
+            color: "#fff",
+            border: "1px solid #334155",
+          },
+        })
+        setIsLoading(false)
+        return
       }
+
+      toast.success("Account created! Please check your email to verify.", {
+        duration: 4000,
+        position: "top-center",
+      })
+      router.replace("/dashboard")
     }
+    
     setIsLoading(false)
   }
 
@@ -279,33 +314,34 @@ export default function SignInPage() {
             />
 
             <Card className="relative bg-slate-800/95 backdrop-blur-xl border border-slate-700/50 shadow-2xl overflow-hidden rounded-lg sm:rounded-2xl p-4 sm:p-8">
-              {/* Card Header with Enhanced Gradient */}
-              <div className="relative p-4 sm:p-8 pb-6">
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/8 via-purple-500/8 to-cyan-500/8" />
-
-                {/* Floating Particles */}
-                <div className="absolute inset-0 overflow-hidden">
-                  {[...Array(6)].map((_, i) => (
-                    <motion.div
-                      key={i}
-                      className="absolute w-1 h-1 bg-blue-400/30 rounded-full"
-                      animate={{
-                        x: [0, 100, 0],
-                        y: [0, -50, 0],
-                        opacity: [0, 1, 0],
-                      }}
-                      transition={{
-                        duration: 4 + i,
-                        repeat: Number.POSITIVE_INFINITY,
-                        delay: i * 0.8,
-                      }}
-                      style={{
-                        left: `${20 + i * 15}%`,
-                        top: `${30 + i * 10}%`,
-                      }}
-                    />
-                  ))}
-                </div>
+              <CardHeader>
+                <CardTitle>
+                  {/* Floating Particles */}
+                  <div className="absolute inset-0 overflow-hidden">
+                    {[...Array(6)].map((_, i) => (
+                      <motion.div
+                        key={i}
+                        className="absolute w-1 h-1 bg-blue-400/30 rounded-full"
+                        animate={{
+                          x: [0, 100, 0],
+                          y: [0, -50, 0],
+                          opacity: [0, 1, 0],
+                        }}
+                        transition={{
+                          duration: 4 + i,
+                          repeat: Number.POSITIVE_INFINITY,
+                          delay: i * 0.8,
+                        }}
+                        style={{
+                          left: `${20 + i * 15}%`,
+                          top: `${30 + i * 10}%`,
+                        }}
+                      />
+                    ))}
+                  </div>
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
 
                 {/* Ultra-Enhanced Tab Switcher */}
                 <div className="relative mb-8">
@@ -539,7 +575,7 @@ export default function SignInPage() {
                       : "Create your developer account and join thousands of coders"}
                   </motion.p>
                 </motion.div>
-              </div>
+              </CardContent>
 
               {/* Form Content */}
               <div className="px-8 pb-8">
@@ -578,7 +614,13 @@ export default function SignInPage() {
                         </div>
                       </motion.div>
                     )}
-
+                    {/* Demo credentials notice - Moved */}
+<div className="flex items-center gap-2 bg-red-900/40 border border-red-500/60 text-red-200 rounded px-2 py-1 mb-2 text-xs">
+                  <AlertCircle className="w-4 h-4 text-red-400" />
+                  <span>
+                    <b>Demo Credentials:</b> <span className="font-mono">abctest@gmail.com</span> / <span className="font-mono">Abc123</span>
+                  </span>
+                </div>
                     <div className="space-y-2">
                       <Label htmlFor="email" className="text-gray-300 font-medium">
                         Email

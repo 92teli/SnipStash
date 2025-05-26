@@ -1,9 +1,8 @@
-
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { Tables, TablesInsert, TablesUpdate } from '@/integrations/supabase/types';
 
-type Collection = Tables<'collections'>;
+type Collection = Tables<'collections'> & { snippet_count?: number };
 type CollectionInsert = TablesInsert<'collections'>;
 type CollectionUpdate = TablesUpdate<'collections'>;
 type SnippetCollection = Tables<'snippet_collections'>;
@@ -13,7 +12,7 @@ export const useCollections = () => {
     queryKey: ['collections'],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from('collections')
+        .from('collections_with_snippet_count')
         .select('*')
         .order('name');
       
